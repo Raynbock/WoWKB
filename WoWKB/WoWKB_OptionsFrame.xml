@@ -1,0 +1,173 @@
+<!--
+    WoWKB: A moused-over NPC/mob database
+
+    See the README file for more information.
+-->
+
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
+    <Script file="WoWKB_OptionsFrame.lua"/>
+
+    <Frame name="WoWKB_OptionsFrame" inherits="WoWKB_FrameTemplate">
+        <Size><AbsDimension x="280" y="185" /></Size>
+        <Anchors>
+            <Anchor point="CENTER"/>
+        </Anchors>
+        <Scripts>
+            <OnLoad>
+                this:SetBackdropColor(0,0,0)
+            </OnLoad>
+            <OnHide>
+                PlaySound("igMiniMapZoomOut")
+            </OnHide>
+            <OnShow>
+                PlaySound("igMiniMapZoomIn")
+            </OnShow>
+        </Scripts>
+
+        <Frames>
+            <Frame name="WoWKB_OptionsFrameTitle">
+                <Size><AbsDimension x="150" y="36"/></Size>
+                <Anchors>
+                    <Anchor point="TOP">
+                        <Offset><AbsDimension x="0" y="18"/></Offset>
+                    </Anchor>
+                </Anchors>
+                <Layers>
+                    <Layer level="BACKGROUND">
+                        <Texture name="WoWKB_OptionsFrameTitleTexture" file="Interface\DialogFrame\UI-DialogBox-Header">
+                            <Size><AbsDimension x="150" y="36"/></Size>
+                        </Texture>
+                        <FontString name="WoWKB_OptionsFrameTitleFontString" inherits="GameFontNormal" text="WOWKB_OPTIONS_HEADER">
+                            <Anchors>
+                                <Anchor point="TOP" relativeTo="WoWKB_OptionsFrameTitleTexture">
+                                    <Offset><AbsDimension x="0" y="-14"/></Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <Scripts>
+                    <OnLoad>
+                        this:RegisterForDrag("LeftButton")
+                        WoWKB_OptionsFrameTitleTexture:SetTexCoord(0.24, 0.76, 0, 0.56)
+                    </OnLoad>
+                    <OnMouseDown>
+                        WoWKB_OptionsFrame:StartMoving()
+                    </OnMouseDown>
+                    <OnMouseUp>
+                        WoWKB_OptionsFrame:StopMovingOrSizing()
+                    </OnMouseUp>
+                </Scripts>
+            </Frame>
+
+            <CheckButton name="WoWKB_ShowUpdatesCheckButton" inherits="WoWKB_CheckButtonTemplate">
+                <Anchors>
+                    <Anchor point="TOPLEFT">
+                        <Offset><AbsDimension x="20" y="-25"/></Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnLoad>
+                        getglobal(this:GetName().."Text"):SetText(" "..WOWKB_SHOW_UPDATES)
+                    </OnLoad>
+                    <OnEnter>
+                        WoWKB_OnEnter(WOWKB_SHOW_UPDATES, "ANCHOR_RIGHT", true, WOWKB_SHOW_UPDATES_HELP)
+                    </OnEnter>
+                    <OnClick>
+                        WoWKB_ToggleShowUpdates()
+                    </OnClick>
+                </Scripts>
+            </CheckButton>
+
+            <CheckButton name="WoWKB_ShowMiniMapButtonCheckButton" inherits="WoWKB_CheckButtonTemplate">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="WoWKB_ShowUpdatesCheckButton" relativePoint="BOTTOMLEFT">
+                        <Offset><AbsDimension x="0" y="0"/></Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnLoad>
+                        getglobal(this:GetName().."Text"):SetText(" "..WOWKB_SHOW_MINIMAP_BUTTON)
+                    </OnLoad>
+                    <OnEnter>
+                        WoWKB_OnEnter(WOWKB_SHOW_MINIMAP_BUTTON, "ANCHOR_RIGHT", true, WOWKB_SHOW_MINIMAP_BUTTON_HELP)
+                    </OnEnter>
+                    <OnClick>
+                        WoWKB_ToggleShowMiniMapButton()
+                    </OnClick>
+                </Scripts>
+            </CheckButton>
+
+            <CheckButton name="WoWKB_BoundingBoxCheckButton" inherits="WoWKB_CheckButtonTemplate">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="WoWKB_ShowMiniMapButtonCheckButton" relativePoint="BOTTOMLEFT">
+                        <Offset><AbsDimension x="0" y="0"/></Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnLoad>
+                        getglobal(this:GetName().."Text"):SetText(" "..WOWKB_BOUNDING_BOX)
+                    </OnLoad>
+                    <OnEnter>
+                        WoWKB_OnEnter(WOWKB_BOUNDING_BOX, "ANCHOR_RIGHT", true, WOWKB_BOUNDING_BOX_HELP)
+                    </OnEnter>
+                    <OnClick>
+                        WoWKB_ToggleBoundingBox()
+                    </OnClick>
+                </Scripts>
+            </CheckButton>
+
+            <CheckButton name="WoWKB_CreateMiniNotesCheckButton" inherits="WoWKB_CheckButtonTemplate">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="WoWKB_BoundingBoxCheckButton" relativePoint="BOTTOMLEFT">
+                        <Offset><AbsDimension x="0" y="0"/></Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnLoad>
+                        getglobal(this:GetName().."Text"):SetText(" "..WOWKB_CREATE_MINI_NOTES)
+                    </OnLoad>
+                    <OnEnter>
+                        WoWKB_OnEnter(WOWKB_CREATE_MINI_NOTES, "ANCHOR_RIGHT", true, WOWKB_CREATE_MINI_NOTES_HELP)
+                    </OnEnter>
+                    <OnClick>
+                        WoWKB_ToggleCreateMiniNotes()
+                    </OnClick>
+                </Scripts>
+            </CheckButton>
+
+            <CheckButton name="WoWKB_OneMiniNoteCheckButton" inherits="WoWKB_CheckButtonTemplate">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="WoWKB_CreateMiniNotesCheckButton" relativePoint="BOTTOMLEFT">
+                        <Offset><AbsDimension x="0" y="0"/></Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnLoad>
+                        getglobal(this:GetName().."Text"):SetText(" "..WOWKB_ONE_MINI_NOTE)
+                    </OnLoad>
+                    <OnEnter>
+                        WoWKB_OnEnter(WOWKB_ONE_MINI_NOTE, "ANCHOR_RIGHT", true, WOWKB_ONE_MINI_NOTE_HELP)
+                    </OnEnter>
+                    <OnClick>
+                        WoWKB_ToggleOneMiniNote()
+                    </OnClick>
+                </Scripts>
+            </CheckButton>
+
+            <Button name="WoWKB_CloseOptionsFrameButton" inherits="UIPanelButtonTemplate2" text="WOWKB_CLOSE_BUTTON">
+                <Size><AbsDimension x="80" y="24"/></Size>
+                <Anchors>
+                    <Anchor point="BOTTOM">
+                        <Offset><AbsDimension x="0" y="10"/></Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+                    <OnClick>
+                        WoWKB_OptionsFrame:Hide()
+                    </OnClick>
+                </Scripts>
+            </Button>
+        </Frames>
+    </Frame>
+</Ui>

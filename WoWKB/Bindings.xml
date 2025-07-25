@@ -1,0 +1,14 @@
+<!--
+    WoWKB: A moused-over NPC/mob database
+
+    See the README file for more information.
+-->
+
+<Bindings>
+    <Binding name = "WOWKB_TOGGLE_MAIN_UI" header = "WOWKB">
+        WoWKB_ToggleFrame(WoWKB_MainFrame)
+    </Binding>
+    <Binding name = "WOWKB_TOGGLE_OPTIONS_UI">
+        WoWKB_ToggleFrame(WoWKB_OptionsFrame)
+    </Binding>
+</Bindings>

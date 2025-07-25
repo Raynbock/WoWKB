@@ -1,0 +1,18 @@
+## Interface: 30300
+## Title: WoWKB |c0000FF00(v20003.6)|r
+## Version: 20003.6
+## X-Date: January 30, 2006
+## Author: ciphersimian
+## Notes: A moused-over NPC/mob database
+## Notes-deDE: Eine Datenbank von NPC/mobs, die man getroffen hat.
+## X-Email: ciphersimian@gmail.com
+## X-Website: See README for download sites
+## X-Category: MYADDONS_CATEGORY_MAP
+## X-OptionsFrame: WoWKB_OptionsFrame
+## RequiredDeps:
+## OptionalDeps: MetaMap, myAddOns, Cartographer
+## DefaultState: enabled
+## SavedVariables: WoWKB_Data, WoWKB_State, WoWKB_UnknownZones, WoWKB_CartographerNotes
+WoWKB.xml
+WoWKB_MiniMapButton.xml
+WoWKB_OptionsFrame.xml

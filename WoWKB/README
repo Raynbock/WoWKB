@@ -1,0 +1,254 @@
+!! BACK UP YOUR SavedVariables/WoWKB.lua !!
+
+Enhancements were made to the import/merge code - you may want to re-import
+your MetaMap or old WoWKB data as it may pick up additional data (no duplicates
+will be created)
+
+*******************************************************************************
+WoWKB README v20003.6
+*******************************************************************************
+
+Released: January 30, 2007
+Maintainer: ciphersimian
+Original code: Arthesia
+Contributors:
+Kipple
+Regan
+
+Download from any of the following:
+http://wow.curse-gaming.com/en/files/details/908/wowkb/
+http://www.wowinterface.com/downloads/fileinfo.php?s=&id=4288
+http://ui.worldofwar.net/ui.php?id=1525
+http://www.wowguru.com/ui/174/wowkb/
+
+*******************************************************************************
+Change Log
+*******************************************************************************
+[Version 20003.6]
+
+Added a check for nil level from UnitLevel
+Updated German localization
+Corrected importing of data for non-english clients
+Improved importing/merging of data in general
+Changed handling of 0 coords - will be stored only if no
+    other data is available
+Removed upgrade functionality for legacy versions of WoWKB (versions before
+    1800.1 - ancient)
+Removed 'Method B' import option which used an external lua script
+
+
+*******************************************************************************
+Description
+*******************************************************************************
+
+This AddOn stores the name, description, level, rarity and location of all the
+NPCs/mobs you mouse over. The location is stored as a range to allow for
+movement or various spawn points. The range is updated every time you find the
+NPC in a different location. The WoWKB database is global - all your characters
+on the same computer and account can access it.
+
+
+*******************************************************************************
+Philosophy
+*******************************************************************************
+
+This section is about what WoWKB is and what it is not. The first thing to
+know is that it is not possible to precisely determine the location of an NPC
+or mob in WoW. Early on they decided to disable the ability to get the
+location of anything but yourself to disable range-checking AddOns.
+
+As a result WoWKB doesn't actually keep track of NPC/mob locations - it keeps
+track of the position at which you were standing when you moused-over a given
+NPC/mob. For the most part, this works fine. The imporant thing to realize
+though is that the locations are not going to be exact.  In some cases, they
+will be pretty far off all depending on how far away from a particular
+NPC/mob you can be and mouse-over it.
+
+To better visualize where things can be found I've implemented MapNotes and
+Cartographer support which I strongly recommend you take advantage of. There's
+an option in MapNotes (enabled by default) which will create a bounding box
+with a center point on the map when you left-click an NPC/mob in the results
+window. Cartographer supports only the center point as, at the time of this
+writing, it has no way to draw lines on the map.  This could get cluttered
+pretty fast but the way I've intended WoWKB and MapNotes/Cartographer to be
+used together makes notes you create on the map, or at least those created by
+WoWKB, a very temporary thing. You create notes when you need them (i.e.
+hunting a particular mob or looking for a particular NPC) and then when things
+start to get cluttered you can remove the notes for a particular NPC/mob by
+right-clicking it in the results window or remove all the WoWKB notes by
+clicking the Clear Map Notes button.
+
+Of course, I'm open to new ideas on how to best present the data that WoWKB
+is able to gather so if you've got any ideas, let me know.
+
+
+*******************************************************************************
+Features
+*******************************************************************************
+
+[Slash Commands]
+
+You can use the following commands to perform a search (ommiting search term
+will list all records in the database):
+
+/wowkb [search term]
+or
+/wkb [search term]
+
+
+[User Interface]
+
+The coordinates in the results are color-coded based on your location:
+Green - Within the min/max range the NPC/mob was seen
+Yellow - In the same zone as the NPC/mob
+Red - In a different zone than the NPC/mob
+
+There are two different formats for the coordinates listed after the name and
+description of the NPC/mob.
+
+(XX.XX, YY.YY) - This form means the range is less than three map units which
+generally means the NPC/mob stays in the same spot or you
+haven't seen it very many times. The X and Y coordinates are
+expressed to the nearest 1/100th of a map unit.
+
+(xx-XX), (yy-YY) - This form means the range is greater than or equal to three
+map units and expresses the X and Y coordinates as a range
+from min x to max X and min y to max Y.
+
+You can sort the results by name, description, level, rarity, zone or
+coordinates by clicking on the appropriate column heading.  Clicking on the
+same heading a second time will sort that column in reverse order.  Sorting by
+coordinates does a sort by distance for any results which are in the same zone
+(green/yellow.)
+
+The number of NPCs/mobs found as well as the number of zones they were found
+across is displayed in the information bar.  This bar will also display error
+messages, etc.
+
+
+[Other Features]
+
+Remove unwanted entries from the database with <Shift>+<Ctrl>+Right-click
+
+Insert the text from an entry into chat by opening the chat input bar and
+then <Shift>+Left-clicking the entry you want to insert.
+
+Import/Merge other WoWKB data files from friends, guildmates, etc. see the
+section devoted to this topic below.
+
+
+[Optional Map Notes Support*]
+
+In the search results window:
+Left-click - Add a map note (or a group of MapNotes, see the options below)
+on the WorldMap and a MiniNote on the MiniMap for the entry
+Right-click - Remove any map notes for the entry
+
+From the main interface:
+Clear Map Notes button - clears all the MapNotes/Cartographer Notes created by WoWKB
+
+*Requires:
+MapNotes v3.17.20000+ - http://wow.curse-gaming.com/en/files/details/4116/mapnotes-fans-update/
+or
+Cartographer r25291+ - http://www.wowinterface.com/downloads/info6403-Cartographer.html
+
+
+*******************************************************************************
+Options
+*******************************************************************************
+
+Show Only Local NPCs
+Shows only the green and yellow entries when enabled
+
+Show Updates
+For debugging purposes, displays database changes (verbose)
+
+Create MapNotes Bounding Box (MapNotes only)
+Create four MapNotes with lines connecting them representing the NW,
+NE, SW and SE bounds of the NPC/mob versus just a single MapNote marking
+the center point
+
+Add MiniNotes To MiniMap (MapNotes only)
+Controls whether a MiniNote will be added to the MiniMap when MapNotes are
+created by left-clicking an entry
+
+Keep Only The Last MiniNote (MapNotes only)
+Controls whether previous MiniNotes will be cleared before adding a new one
+to the MiniMap (only in effect if the Add MiniNotes To MiniMap option is
+enabled)
+
+
+*******************************************************************************
+Importing/Merging Data
+*******************************************************************************
+
+NOTE: MetaMapWKB data is automatically imported when WoWKB loads and detects
+MetaMapWKB data so you need only enable both AddOns and enter the game.
+
+NOTE: This feature is for combining multiple WoWKB data files, old versions of
+      your WoWKB data will be converted to the new data format automatically
+      when you log into the game with an old version.
+
+    1. Log out of WoW
+
+    2. BACKUP YOUR WoWKB.lua FILE!
+         ./World of Warcraft/WTF/Account/USER/SavedVariables/WoWKB.lua
+
+    3. Open the file to import in a text editor, I'll call it WoWKB2.lua
+
+    4. Rename the WoWKB_Data table to WoWKB_ImportData
+
+                WoWKB_Data = {
+                    ...
+                }
+
+                becomes:
+
+                WoWKB_ImportData = {
+                    ...
+                }
+
+    5. Rename the WoWKB_State table to WoWKB_ImportState
+
+    6. Rename the WoWKB_UnknownZones table to WoWKB_ImportUnknownZones
+
+    7. Copy the entire contents of WoWKB2.lua (which contains WoWKB_ImportData,
+        WoWKB_ImportState and WoWKB_ImportUnknownZones) to the end of the
+        WoWKB.lua that you want to import it into.  If you made the changes to
+        WoWKB2.lua above, you could accomplish this with the command:
+
+                Windows:
+                    C:\> type WoWKB2.lua >> WoWKB.lua
+
+                OS X / Linux:
+                    $ cat WoWKB2.lua >> WoWKB.lua
+
+        So you have a file like this:
+
+                WoWKB_Data = {
+                    ...
+                }
+
+                WoWKB_State = {
+                    ...
+                }
+
+                WoWKB_UnknownZones = {
+                    ...
+                }
+
+                WoWKB_ImportData = {
+                    ...
+                }
+
+                WoWKB_ImportState = {
+                    ...
+                }
+
+                WoWKB_ImportUnknownZones = {
+                    ...
+                }
+
+    8. Log in to WoW, you should see the message:
+
+'<WoWKB>: WoWKB_ImportData merged successfully, added X entries and updated Y'

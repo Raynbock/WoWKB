@@ -1,0 +1,86 @@
+<!--
+    WoWKB: A moused-over NPC/mob database
+
+    See the README file for more information.
+-->
+
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
+    <Script file="WoWKB_MiniMapButton.lua"/>
+    <Frame name="WoWKB_MiniMapButtonFrame" parent="Minimap" enableMouse="true" hidden="false" frameStrata="LOW">
+        <Size>
+            <AbsDimension x="32" y="32"/>
+        </Size>
+        <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="Minimap" relativePoint="RIGHT">
+                <Offset>
+                    <AbsDimension x="2" y="0"/>
+                </Offset>
+            </Anchor>
+        </Anchors>
+        <Frames>
+            <Button name="WoWKB_MiniMapButton">
+                <Size>
+                    <AbsDimension x="32" y="32"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT">
+                        <Offset>
+                            <AbsDimension x="0" y="0"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <NormalTexture file="Interface\AddOns\WoWKB\Images\WoWKB_MiniMapButton-Up"/>
+                <PushedTexture file="Interface\AddOns\WoWKB\Images\WoWKB_MiniMapButton-Down"/>
+                <DisabledTexture file="Interface\AddOns\WoWKB\Images\WoWKB_MiniMapButton-Up"/>
+                <HighlightTexture alphaMode="ADD" file="Interface\Minimap\UI-Minimap-ZoomButton-Highlight"/>
+                <Layers>
+                    <Layer level="OVERLAY">
+                        <Texture name="$parentBorder" file="Interface\Minimap\MiniMap-TrackingBorder">
+                            <Size>
+                                <AbsDimension x="52" y="52"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPLEFT"/>
+                            </Anchors>
+                        </Texture>
+                    </Layer>
+                </Layers>
+                <Scripts>
+                    <OnLoad>
+                        this:RegisterForDrag("RightButton")
+                        this.dragme = false
+                    </OnLoad>
+                    <OnDragStart>
+                        this.dragme = true
+                    </OnDragStart>
+                    <OnDragStop>
+                        this.dragme = false
+                    </OnDragStop>
+                    <OnClick>
+                        WoWKB_MiniMapButtonOnClick()
+                    </OnClick>
+                    <OnEnter>
+                        WoWKB_MiniMapButtonOnEnter()
+                    </OnEnter>
+                    <OnLeave>
+                        GameTooltip:Hide()
+                    </OnLeave>
+                    <OnUpdate>
+                        if(this.dragme == true) then
+                            WoWKB_MiniMapButtonBeingDragged()
+                        end
+                    </OnUpdate>
+                </Scripts>
+            </Button>
+        </Frames>
+        <Scripts>
+            <OnLoad>
+                this:RegisterEvent("VARIABLES_LOADED")
+            </OnLoad>
+            <OnEvent>
+                WoWKB_MiniMapButtonInit()
+                WoWKB_MiniMapButtonUpdatePosition()
+            </OnEvent>
+        </Scripts>
+    </Frame>
+</Ui>
