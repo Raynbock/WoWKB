@@ -1,2 +1,3 @@
 # WoWKB
-fixed version of the WoW Knowledge Base from https://www.wowinterface.com/downloads/fileinfo.php?s=&amp;id=4288
+Fixed version of the WoW Knowledge Base from https://www.wowinterface.com/downloads/fileinfo.php?s=&amp;id=4288
+Working with Mapnotes v5.17.30300 and Cartographer v -have to check, will edit entry later-
